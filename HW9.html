@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HW9</title>
+</head>
+<body>
+<div id="quote-container"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const quotecont = document.getElementById('quote-container');
+
+    function fetchq() {
+        fetch('https://api.quotable.io/random')
+            .then(response => response.json())
+            .then(data => {
+                const quote = data.content;
+                writer(quote);
+            })
+            .catch(error => console.error('Error fetching quote:', error));
+    }
+
+    function writer(text) {
+        let index = 0;
+        const intervalId = setInterval(() => {
+            quotecont.textContent += text[index];
+            index++;
+            if (index === text.length) {
+                clearInterval(intervalId);
+            }
+        }, 250);
+    }
+
+    fetchq();
+});
+</script>
+</body>
+</html>
